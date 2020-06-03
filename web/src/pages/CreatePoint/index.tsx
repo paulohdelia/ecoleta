@@ -42,28 +42,26 @@ const CreatePoint = () => {
 
             setUFs(ufInitials);
         });
-    });
+    }, []);
 
     useEffect(() => {
         if(selectedUF === '0') {
             return;
         }
-        
+
         axios.get<IBGECityResponse[]>(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${selectedUF}/municipios`).then(res => {
             const cityNames = res.data.map(city => city.nome);
 
             setCities(cityNames);
         });
-    });
+    }, [selectedUF]);
     
-    function handleSelectedUF(event: ChangeEvent<HTMLSelectElement>) {
+    function handleSelectUF(event: ChangeEvent<HTMLSelectElement>) {
         const uf = event.target.value;
         setSelectedUF(uf);
     }
 
-    function handleSelectedCity(event: ChangeEvent<HTMLSelectElement>) {
-        if(selectedUF === '0') return;
-
+    function handleSelectCity(event: ChangeEvent<HTMLSelectElement>) {
         const city = event.target.value;
         setSelectedCity(city);
     }
@@ -122,7 +120,7 @@ const CreatePoint = () => {
                     <div className="field-group">
                         <div className="field">
                             <label htmlFor="uf">Estado (UF)</label>
-                            <select onChange={handleSelectedUF} value={selectedUF} name="uf" id="uf">
+                            <select onChange={handleSelectUF} value={selectedUF} name="uf" id="uf">
                                 <option value="0">Selecione uma UF</option>
                                 {ufs.map(uf => (
                                     <option key={uf} value={uf}>{uf}</option>
@@ -131,7 +129,7 @@ const CreatePoint = () => {
                         </div>
                         <div className="field">
                             <label htmlFor="city">Cidade</label>
-                            <select onChange={handleSelectedCity} value={selectedCity} name="city" id="city">
+                            <select onChange={handleSelectCity} value={selectedCity} name="city" id="city">
                                 <option value="0">Selecione uma cidade</option>
                                 {cities.map(city => (
                                     <option key={city} value={city}>{city}</option>
