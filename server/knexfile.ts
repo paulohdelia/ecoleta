@@ -14,4 +14,4 @@ module.exports = {
     useNullAsDefault: true
 };
 
-// npx knex migrate:latest --knexfile knexfile.ts migrate:latest
+// npx knex --knexfile knexfile.ts migrate:latest
